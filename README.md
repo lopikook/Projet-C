@@ -14,7 +14,7 @@ Ce fichier fournit les informations essentielles concernant le jeu de Morpion en
 
 ---
 
-## 1. Description Brève <a name="description-brève"></a>
+## 1. Description <a name="description-brève"></a>
 
 Ce programme est une implémentation en langage C d'un jeu de Morpion jouable entièrement dans un terminal (console).
 
