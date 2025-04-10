@@ -1,4 +1,4 @@
-# README - Morpion en C (Tic-Tac-Toe)
+# Projet C : Morpion (Tic-Tac-Toe)
 
 Ce fichier fournit les informations essentielles concernant le jeu de Morpion en C développé précédemment. Il inclut une description, les fonctionnalités clés, les instructions d'utilisation et les commandes.
 
@@ -16,12 +16,12 @@ Ce fichier fournit les informations essentielles concernant le jeu de Morpion en
 
 ## 1. Description Brève <a name="description-brève"></a>
 
-Ce programme est une implémentation en langage C d'un jeu de Morpion (ou Gomoku pour la version 5x5) jouable entièrement dans un terminal (console).
+Ce programme est une implémentation en langage C d'un jeu de Morpion jouable entièrement dans un terminal (console).
 
 Il offre plusieurs modes de jeu :
-* **Joueur vs Joueur (JcJ)** sur une grille classique de 3x3.
-* **Joueur vs IA Facile (JcIA Facile)** sur une grille 3x3, où l'IA effectue des mouvements aléatoires.
-* **Joueur vs IA Difficile (JcIA Difficile)** sur une grille étendue de 5x5, où l'IA utilise l'algorithme **Minimax** pour tenter de jouer le meilleur coup possible (victoire par alignement de 4 pions).
+* **Joueur vs Joueur** sur une grille classique de 3x3.
+* **Joueur vs IA Facile** sur une grille 3x3, où l'IA effectue des mouvements aléatoires.
+* **Joueur vs IA Difficile** sur une grille étendue de 5x5, où l'IA utilise l'algorithme **Minimax** pour tenter de jouer le meilleur coup possible (victoire par alignement de 4 pions).
 
 L'interface en console utilise des couleurs (via les codes ANSI) pour une meilleure distinction des joueurs et du curseur, et le code est conçu pour être multiplateforme (Windows, Linux, macOS).
 
