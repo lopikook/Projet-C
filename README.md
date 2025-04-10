@@ -1,55 +1,113 @@
-# Projet-C
+# README - Morpion en C (Tic-Tac-Toe)
 
-## Morpion en C (Tic-Tac-Toe en C)
+Ce fichier fournit les informations essentielles concernant le jeu de Morpion en C développé précédemment. Il inclut une description, les fonctionnalités clés, les instructions d'utilisation et les commandes.
 
-Ce programme est une implémentation en ligne de commande du jeu classique du Morpion (Tic-Tac-Toe), écrit entièrement en langage C. Il a été adapté à partir d'une version C++ initiale, en utilisant les idiomes et bibliothèques standard du C. Le jeu se joue directement dans le terminal.  
-Il offre différents modes de jeu, y compris contre un autre joueur ou contre une intelligence artificielle de difficulté variable.
+## Sommaire
 
-## Fonctionnalités
+1.  [Description Brève](#description-brève)
+2.  [Points Importants et Fonctionnalités](#points-importants-et-fonctionnalités)
+3.  [Mode d'Emploi](#mode-demploi)
+    * [Prérequis](#prérequis)
+    * [Compilation](#compilation)
+    * [Exécution](#exécution)
+4.  [Commandes en Jeu](#commandes-en-jeu)
 
-* **Interface en Console :** Le jeu se déroule entièrement dans le terminal texte.
-* **Modes de jeu :**
-    * **Joueur vs Joueur :** Deux joueurs humains s'affrontent sur un plateau 3x3.
-    * **Joueur vs IA Facile :** Un joueur humain affronte une IA qui joue des coups aléatoires sur les cases vides (plateau 3x3).
-    * **Joueur vs IA Difficile :** Un joueur humain affronte une IA plus avancée utilisant l'algorithme Minimax (avec une profondeur limitée pour la performance) sur un **plateau 5x5**. La condition de victoire sur ce plateau est d'aligner 4 symboles.
-* **Curseur de Sélection :** Un curseur `[]` indique la case actuellement sélectionnée sur le plateau.
-* **Compatibilité Multiplateforme :** Le code utilise des directives de préprocesseur (`#ifdef _WIN32`) pour gérer les différences entre Windows et les systèmes POSIX (Linux, macOS) pour l'entrée non bufferisée (`getch`) et la fonction de pause (`sleep`).
+---
 
-## Bibliothèques Utilisées (Headers C Standard et Spécifiques)
+## 1. Description Brève <a name="description-brève"></a>
 
-Le programme utilise les bibliothèques C suivantes :
+Ce programme est une implémentation en langage C d'un jeu de Morpion (ou Gomoku pour la version 5x5) jouable entièrement dans un terminal (console).
 
-* **Bibliothèques Standard C :**
-    * `stdio.h` : Pour les fonctions d'entrée/sortie standard (`printf`, `scanf`, `getchar`, etc.).
-    * `stdlib.h` : Pour l'allocation dynamique de mémoire (`malloc`, `free`), la génération de nombres aléatoires (`rand`, `srand`), et la fonction `system` (utilisée pour effacer l'écran sous Windows).
-    * `stdbool.h` : Pour utiliser le type de données `bool` et les constantes `true`/`false` (Standard C99).
-    * `time.h` : Pour initialiser le générateur de nombres aléatoires (`srand(time(NULL))`).
-    * `limits.h` : Pour les constantes `INT_MIN` et `INT_MAX`, utilisées dans l'algorithme Minimax.
+Il offre plusieurs modes de jeu :
+* **Joueur vs Joueur (JcJ)** sur une grille classique de 3x3.
+* **Joueur vs IA Facile (JcIA Facile)** sur une grille 3x3, où l'IA effectue des mouvements aléatoires.
+* **Joueur vs IA Difficile (JcIA Difficile)** sur une grille étendue de 5x5, où l'IA utilise l'algorithme **Minimax** pour tenter de jouer le meilleur coup possible (victoire par alignement de 4 pions).
 
-* **Bibliothèques Spécifiques à la Plateforme :**
+L'interface en console utilise des couleurs (via les codes ANSI) pour une meilleure distinction des joueurs et du curseur, et le code est conçu pour être multiplateforme (Windows, Linux, macOS).
+
+---
+
+## 2. Points Importants et Fonctionnalités <a name="points-importants-et-fonctionnalités"></a>
+
+* **Jeu Complet :** Implémente les règles du Morpion (3x3, aligner 3) et une variante Gomoku (5x5, aligner 4).
+* **Modes de Jeu Variés :** Permet de jouer seul contre l'ordinateur (deux niveaux) ou à deux joueurs.
+* **Intelligence Artificielle :**
+    * **Niveau Facile :** Sélection aléatoire parmi les cases vides. Simple mais fonctionnel.
+    * **Niveau Difficile :** Utilisation de l'algorithme **Minimax** pour explorer les coups futurs jusqu'à une certaine profondeur. L'IA évalue les états du jeu pour maximiser ses chances de gagner et minimiser celles de l'adversaire.
+* **Interface Console Améliorée :**
+    * Affichage clair de la grille.
+    * Utilisation de **couleurs ANSI** pour 'X', 'O', le curseur et les messages.
+    * **Curseur interactif** contrôlable via les flèches du clavier.
+* **Multiplateforme :**
+    * Utilisation de directives de préprocesseur (`#ifdef _WIN32`) pour adapter les fonctions spécifiques au système d'exploitation :
+        * Nettoyage de l'écran (`clear_screen`).
+        * Lecture de caractère non-bufferisée (`getch_custom`).
+        * Pause (`sleep_ms`).
+* **Gestion Dynamique de la Mémoire :**
+    * Allocation de la mémoire pour la grille de jeu via `malloc`.
+    * Libération systématique de la mémoire via `free` (`free_game`) pour prévenir les fuites mémoire.
+* **Structure Modulaire :** Le code est organisé en fonctions distinctes pour chaque tâche (initialisation, affichage, gestion des entrées, logique IA, vérification du gagnant, etc.), améliorant la lisibilité et la maintenance.
+* **Détection de Fin de Partie :** Le jeu détecte correctement les victoires (alignements horizontaux, verticaux, diagonaux) et les matchs nuls (grille pleine sans vainqueur).
+
+---
+
+## 3. Mode d'Emploi <a name="mode-demploi"></a>
+
+### Prérequis <a name="prérequis"></a>
+
+* Un **compilateur C** (par exemple, GCC sous Linux/macOS, MinGW/MSYS2 ou le compilateur intégré à Visual Studio sous Windows).
+
+### Compilation <a name="compilation"></a>
+
+1.  Sauvegardez le code source dans un fichier nommé `main.c`.
+2.  Ouvrez votre terminal ou invite de commande.
+3.  Naviguez (`cd`) jusqu'au répertoire où vous avez enregistré `main.c`.
+4.  Compilez le code à l'aide de la commande suivante :
+
+    ```bash
+    gcc main.c -o morpion
+    ```
+    * *(Note: Bien que ce code spécifique ne semble pas utiliser de fonctions mathématiques complexes nécessitant `-lm`, si vous rencontrez des erreurs de liaison liées à `<math.h>` ou `<limits.h>` sur certains systèmes, essayez : `gcc main.c -o morpion -lm`)*
+
+5.  Si aucune erreur n'apparaît, un fichier exécutable sera créé :
+    * `morpion` sur Linux/macOS.
+    * `morpion.exe` sur Windows.
+
+### Exécution <a name="exécution"></a>
+
+1.  Dans le même terminal, lancez l'exécutable :
+
+    * **Linux / macOS :**
+        ```bash
+        ./morpion
+        ```
     * **Windows :**
-        * `conio.h` : Pour la fonction `_getch()` qui permet de lire un caractère sans attendre la touche Entrée.
-        * `windows.h` : Pour la fonction `Sleep()` qui met en pause l'exécution.
-    * **POSIX (Linux, macOS) :**
-        * `termios.h` : Pour contrôler les attributs du terminal afin d'implémenter une lecture de caractère non bufferisée et sans écho (similaire à `getch`).
-        * `unistd.h` : Pour la fonction `read()` (utilisée dans l'implémentation `getch_custom`) et `usleep()` (équivalent de `Sleep` avec une résolution en microsecondes).
+        ```bash
+        .\morpion.exe
+        ```
+        ou simplement
+        ```bash
+        morpion
+        ```
 
-## Commandes du Jeu
+2.  Le jeu démarrera et affichera le menu principal. Suivez les instructions à l'écran pour choisir un mode de jeu.
 
-### Menu Principal :
+---
 
-* Tapez le numéro correspondant au mode de jeu désiré (1, 2, ou 3) et appuyez sur `Entrée`.
-* Tapez `4` et appuyez sur `Entrée` pour quitter le programme.
+## 4. Commandes en Jeu <a name="commandes-en-jeu"></a>
 
-### En Cours de Partie :
+Pendant une partie, utilisez les touches suivantes :
 
-* **Flèches Directionnelles** (Haut, Bas, Gauche, Droite) : Utilisez les flèches de votre clavier pour déplacer le curseur `[]` sur la case souhaitée du plateau de jeu.
-* **Touche `e`** : Appuyez sur `e` pour placer votre symbole (`X` ou `O`) sur la case actuellement sélectionnée par le curseur. Le coup n'est accepté que si la case est vide.
-* **Touche `q`** : Appuyez sur `q` pour abandonner la partie en cours et revenir au menu principal.
+* **Flèches directionnelles** (↑, ↓, ←, →) : Déplacer le curseur (représenté par `[ ]` ou `[X]` / `[O]`) sur la case souhaitée.
+* **Touche 'e'** OU **Touche 'Entrée'** : Confirmer la position du curseur et placer votre pion ('X' ou 'O') sur la case sélectionnée (si elle est vide).
+* **Touche 'q'** : Quitter la partie en cours immédiatement et retourner au menu principal.
 
-## Compilation
+---
+Fin du README
+EOT;
 
-Pour compiler ce programme, vous avez besoin d'un compilateur C (comme GCC). Ouvrez un terminal dans le répertoire contenant le fichier source (par exemple, `morpion.c`) et exécutez la commande suivante :
+// Affiche le contenu généré.
+// Vous pouvez rediriger la sortie vers un fichier : php ce_script.php > README.md
+echo $readmeContent;
 
-```bash
-gcc morpion.c -o morpion_c
+?>
